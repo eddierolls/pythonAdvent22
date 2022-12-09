@@ -7,8 +7,8 @@ Created on Tue Dec  6 19:40:23 2022
 
 from collections import deque
 
-f = open('tests/Day06.txt')
-printA = False
+f = open('inputs/Day06.txt')
+printA = True
 for line in f:
     buffer = deque([' ']*14)
     score = 0

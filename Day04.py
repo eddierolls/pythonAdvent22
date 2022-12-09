@@ -10,7 +10,7 @@ def fullyContains(a,b):
 def anyOverlap(a,b):
     return (a[0]<=b[0] and b[0]<=a[1]) or (b[0]<=a[0] and a[0]<=b[1])
 
-f = open('tests/Day04.txt')
+f = open('inputs/Day04.txt')
 
 score = 0
 score2 = 0

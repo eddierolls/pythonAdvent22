@@ -8,7 +8,7 @@ Created on Fri Dec  2 19:06:08 2022
 # Part A
 oppMap = {'A':1, 'B':2, 'C':3} # Rock, Paper, Scissors
 scoreMap = {'X':1, 'Y':2, 'Z':3} # Rock, Paper, Scissors
-f = open('tests/Day02.txt')
+f = open('inputs/Day02.txt')
 
 score = 0
 for line in f:
@@ -23,7 +23,7 @@ print(score)
 
 # Part B
 resMap = {'X':-1, 'Y':0, 'Z':1}
-f = open('tests/Day02.txt')
+f = open('inputs/Day02.txt')
 
 score = 0
 for line in f:
