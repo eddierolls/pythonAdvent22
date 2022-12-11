@@ -4,8 +4,8 @@ Created on Sun Dec 11 18:49:00 2022
 
 @author: edwar
 """
-WORRYFACTOR = 3
-ROUNDS = 20
+WORRYFACTOR = 1
+ROUNDS = 10000
 
 def extractAfter(s,txt):
     return s.strip().split(txt)[1]
@@ -40,7 +40,7 @@ class Monkey(object):
         self.sendTo = [int(line2),int(line1)]
 
 # Initialize
-f = open('tests/Day11.txt')
+f = open('inputs/Day11.txt')
 monkeyList = []
 monkeyId = 0
 while f.readline()!='': # EOF
@@ -53,16 +53,21 @@ while f.readline()!='': # EOF
     monkeyId+=1
     f.readline()
 
+DIVFACTOR = 1
+for monkey in monkeyList:
+    DIVFACTOR*=monkey.test
+
 # Play
 for t in range(ROUNDS):
     for monkey in monkeyList:
-        for item in monkey.items:
+        while len(monkey.items)>0:
+            item = monkey.items.pop()            
             monkey.inspections+=1
             item = sum([monkey.operation[i]*(item**i) for i in range(3)])
             item = item//WORRYFACTOR
+            item%=DIVFACTOR
             nextMonkey = monkey.sendTo[(item%monkey.test)==0]
             monkeyList[nextMonkey].items.append(item)
-        monkey.items = []
 
 inspectionList = list(sorted([monkey.inspections for monkey in monkeyList],reverse=True))
 print(inspectionList[0]*inspectionList[1])
