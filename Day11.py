@@ -6,6 +6,7 @@ Created on Sun Dec 11 18:49:00 2022
 """
 WORRYFACTOR = 1
 ROUNDS = 10000
+from time import time
 
 def extractAfter(s,txt):
     return s.strip().split(txt)[1]
@@ -40,6 +41,7 @@ class Monkey(object):
         self.sendTo = [int(line2),int(line1)]
 
 # Initialize
+clocktime = time()
 f = open('inputs/Day11.txt')
 monkeyList = []
 monkeyId = 0
@@ -71,3 +73,4 @@ for t in range(ROUNDS):
 
 inspectionList = list(sorted([monkey.inspections for monkey in monkeyList],reverse=True))
 print(inspectionList[0]*inspectionList[1])
+print(time()-clocktime)
