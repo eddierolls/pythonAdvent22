@@ -5,7 +5,7 @@ Created on Wed Dec 14 20:57:43 2022
 @author: edwar
 """
 
-f = open("tests/Day14.txt")
+f = open("inputs/Day14.txt")
 lineList = []
 xLim = [500,500]
 yLim = [0,0]
@@ -20,8 +20,8 @@ for line in f:
         barrierList.append(l)
     lineList.append(barrierList)
 
-grid = [[False for _ in range(yLim[1]+2)] for _ in range(xLim[1]+1)]
-print(grid[500])
+grid = [[False for _ in range(yLim[1]+2)] + [True] for _ in range(xLim[1]+yLim[1]+1)]
+
 
 for line in lineList:
     for ix in range(len(line)-1):
@@ -40,10 +40,13 @@ for line in lineList:
         
 s = 0
 finished = False
+partA = None
 while not finished:
     pos = [500,0]
     falling = True
-    while falling and pos[1]<yLim[1]+1:
+    while falling:
+        if not partA and pos[1]>yLim[1]:
+            partA = s
         if not grid[pos[0]][pos[1]+1]:
             pos = [pos[0],pos[1]+1]
         elif not grid[pos[0]-1][pos[1]+1]:
@@ -53,11 +56,10 @@ while not finished:
         else:
             grid[pos[0]][pos[1]] = True
             falling = False
-    if falling:
+    if pos==[500,0]:
         finished = True
-        print(s)
-    else:
-        s+=1
+    s+=1
 
-
+print(partA)
+print(s)
 
