@@ -6,6 +6,7 @@ Created on Sat Dec 17 08:53:30 2022
 """
 CAVEWIDTH = 7
 ROCKS = 2022
+FULLROCKS = 1000000000000
 
 class Cave(object):
     def __init__(self):
@@ -75,4 +76,46 @@ for r in range(ROCKS):
         ixP+=1
 print(cave.topRock)
 
+# Part 2 - we just need to run until we get a stable relationship between cave stats
+# and ixP.
 
+# Step 1: Look for a pattern. Note there was a small amount of trial and error - I suspect this won't work in every edge case
+cave = Cave()
+ixP = 0
+thisSim = 10000
+patternSave = []
+for r in range(thisSim):
+    thisRock = Rock(inputRocks[r%len(inputRocks)])
+    cave.addRock(thisRock)
+    canMove = True
+    while canMove:
+        cave.moveJet(pattern[ixP%len(pattern)])
+        canMove = cave.moveDown()
+        ixP+=1
+    if (ixP%len(pattern))<10 and r>1000:
+        patternSave.append(((ixP%len(pattern)),r%5,r,ixP,cave.topRock))
+
+assert len(set([(p[0],p[1]) for p in patternSave]))
+assert len(set([patternSave[i+1][2]-patternSave[i][2] for i in range(len(patternSave)-1)]))
+assert len(set([patternSave[i+1][3]-patternSave[i][3] for i in range(len(patternSave)-1)]))
+assert len(set([patternSave[i+1][4]-patternSave[i][4] for i in range(len(patternSave)-1)]))
+
+topIncr = patternSave[1][4]-patternSave[0][4]
+rIncr = patternSave[1][2]-patternSave[0][2]
+toGo = FULLROCKS - thisSim
+rockCycles = toGo//rIncr # How many cycles exist
+topCycleIncr = rockCycles * topIncr # How much we increase the top by
+
+# Fudge into the cave
+cyclesRem = toGo-(rockCycles*rIncr)
+print(cyclesRem)
+for r in range(FULLROCKS-cyclesRem,FULLROCKS):
+    thisRock = Rock(inputRocks[r%len(inputRocks)])
+    cave.addRock(thisRock)
+    canMove = True
+    while canMove:
+        cave.moveJet(pattern[ixP%len(pattern)])
+        canMove = cave.moveDown()
+        ixP+=1
+    
+print(cave.topRock+topCycleIncr)
