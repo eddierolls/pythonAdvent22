@@ -58,7 +58,7 @@ class State(object):
             
 allValves = {}
 flowValves = set()
-f = open("tests/Day16.txt")
+f = open("inputs/Day16.txt")
 for line in f:
     line = line.strip().split("Valve ")[1]
     name = line.split(" has")[0]
